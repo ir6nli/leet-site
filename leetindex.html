@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LEET</title>
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    background:black;
+    height:100%;
+    overflow:hidden;
+    font-family:'Courier New', monospace;
+}
+
+
+#video{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:opacity 3.5s ease;
+    z-index:1;
+}
+
+
+#center{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+}
+
+
+#leet{
+    font-size:72px;
+    letter-spacing:8px;
+    font-weight:900;
+    color:white;
+    opacity:0;
+    transition:opacity 1.5s ease;
+    margin-bottom:25px;
+    text-shadow:
+        0 0 10px rgb(0, 255, 42, 0.6),
+        0 0 20px rgba(0, 255, 42, 0.6);
+}
+
+
+.glitch{
+    animation:glitch .18s infinite;
+}
+@keyframes glitch{
+    0%{text-shadow:2px 0 red,-2px 0 white}
+    50%{text-shadow:-2px 0 red,2px 0 white}
+    100%{text-shadow:2px 0 red,-2px 0 white}
+}
+
+
+#key{
+    display:none;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.2);
+    color:white;
+    padding:14px 20px;
+    font-size:18px;
+    letter-spacing:4px;
+    outline:none;
+    width:220px;
+    text-align:center;
+    animation: keyGlow 2.8s ease-in-out infinite;
+}
+#key::placeholder{
+    color:rgba(255,255,255,.4);
+}
+
+@keyframes keyGlow{
+    0%{
+        box-shadow:
+            0 0 6px rgba(255,255,255,.3),
+            0 0 14px rgba(255,255,255,.2);
+        border-color:rgba(255,255,255,.5);
+    }
+    50%{
+        box-shadow:
+            0 0 10px rgba(0, 255, 42, 0.6),
+            0 0 24px rgba(0, 255, 42, 0.6);
+        border-color:rgba(0, 255, 42, 0.6);
+    }
+    100%{
+        box-shadow:
+            0 0 6px rgba(255,255,255,.3),
+            0 0 14px rgba(255,255,255,.2);
+        border-color:rgba(255,255,255,.5);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<video id="video" autoplay muted>
+    <source src="intro.mp4" type="video/mp4">
+</video>
+
+<div id="center">
+    <div id="leet">LEET</div>
+    <input id="key" maxlength="9" placeholder="XXXX-XXXX">
+</div>
+
+<script>
+const video = document.getElementById("video");
+const leet  = document.getElementById("leet");
+const key   = document.getElementById("key");
+
+let letters = ["L","E","E","T"];
+
+
+setTimeout(()=>{
+    video.style.opacity="0";
+},3500);
+
+
+setTimeout(()=>{
+    leet.style.opacity="1";
+},4500);
+
+setTimeout(()=>{
+    letters[0]="1";           // L → 1
+    leet.textContent=letters.join("");
+},6500);
+
+setTimeout(()=>{
+    letters[3]="7";           // T → 7
+    leet.textContent=letters.join("");
+},7600);
+
+setTimeout(()=>{
+    letters[1]="3";           // E → 3
+    leet.textContent=letters.join("");
+},8700);
+
+setTimeout(()=>{
+    letters[2]="3";           // E → 3
+    leet.textContent=letters.join("");
+},9800);
+
+
+setTimeout(()=>{
+    leet.classList.add("glitch");
+},11000);
+
+
+setTimeout(()=>{
+    leet.style.opacity="0";
+},12500);
+
+setTimeout(()=>{
+    leet.classList.remove("glitch");
+    letters=["L","E","E","T"];
+    leet.textContent="LEET";
+    leet.style.opacity="1";
+    key.style.display="block";
+},15000);
+
+
+key.addEventListener("input",()=>{
+    let v=key.value.replace(/[^A-Za-z0-9]/g,"").toUpperCase();
+    if(v.length>4) v=v.slice(0,4)+"-"+v.slice(4,8);
+    key.value=v;
+});
+</script>
+
+</body>
+</html>
